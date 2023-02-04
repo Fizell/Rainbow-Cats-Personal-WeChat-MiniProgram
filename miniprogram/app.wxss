@@ -60,6 +60,11 @@ button::after {
   margin-top: 20px;
 }
 
+.title {
+    line-height: 20px;
+    font-size: 14px !important;
+}
+  
 .form-cell {
   padding: 20px 15px;
 }

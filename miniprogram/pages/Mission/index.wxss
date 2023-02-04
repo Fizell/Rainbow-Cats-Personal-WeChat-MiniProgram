@@ -51,11 +51,12 @@
   color: #BDBDBD;
 }
 .mission-info_author {
-  width: 70px;
-  height: 100%;
-  position: absolute;
-  right: 10%;
-  bottom: 0;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    right: -13px;
+    opacity: 0.4;
+    top: -30px;
 }
 .mission-info_award {
   font-size: 10px;

@@ -49,11 +49,12 @@
   color: #BDBDBD;
 }
 .item-info_author {
-  width: 70px;
-  height: 100%;
+  width: 100px;
+  height: 100px;
   position: absolute;
-  right: 10%;
-  bottom: 0;
+  right: -13px;
+  opacity: 0.4;
+  top: -30px;
 }
 .item-info_award {
   font-size: 10px;

@@ -27,7 +27,7 @@
   width: 50%;
   height: 100%;
   padding-top: 2vh;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
 

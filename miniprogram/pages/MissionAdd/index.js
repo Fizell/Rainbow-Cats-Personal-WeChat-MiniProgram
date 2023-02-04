@@ -7,6 +7,7 @@ Page({
     credit: 0,
     maxCredit: getApp().globalData.maxCredit,
     presetIndex: 0,
+    savingItem: false,
     presets: [{
       name:"无预设",
       title:"",
@@ -110,18 +111,22 @@ Page({
       })
       return
     }else{
-        await wx.cloud.callFunction({name: 'addElement', data: this.data}).then(
-            () => {
-                wx.showToast({
-                    title: '添加成功',
-                    icon: 'success',
-                    duration: 1000
-                })
-            }
-        )
-        setTimeout(function () {
-            wx.navigateBack()
-        }, 1000)
+        if (this.data.savingItem == false) {
+            this.data.savingItem = true
+            await wx.cloud.callFunction({name: 'addElement', data: this.data}).then(
+                () => {
+                    wx.showToast({
+                        title: '添加成功',
+                        icon: 'success',
+                        duration: 1000
+                    })
+                }
+            )
+            setTimeout(function () {
+                wx.navigateBack()
+            }, 1000)
+            this.data.savingItem = false
+        }
     }
   },
 

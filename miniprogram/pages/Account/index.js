@@ -1,7 +1,6 @@
 Page({
     data: {
         search: "",
-
         allItems: [],
         unusedItems: [],
         usedItems: [],
@@ -19,7 +18,7 @@ Page({
     //页面加载时运行
     async onShow(){
         await wx.cloud.callFunction({name: 'getOpenId'}).then(async res => {
-            await wx.cloud.callFunction({name: 'getElementByOpenId', data: {
+            await wx.cloud.callFunction({name: 'getAllElement', data: {
                 list: getApp().globalData.collectionStorageList,
                 _openid: res.result
             }}).then(async data => {
@@ -28,7 +27,6 @@ Page({
             })
         })
     },
-  
     //转到物品详情
     async toDetailPage(element, isUpper) {
       const itemIndex = element.currentTarget.dataset.index
@@ -148,18 +146,29 @@ Page({
         const itemIndex = element.currentTarget.dataset.index
         const item = this.data.unusedItems[itemIndex]
     
-        //使用物品
-        wx.cloud.callFunction({name: 'editAvailable', data: {_id: item._id, value: false, list: getApp().globalData.collectionStorageList}}).then(()=>{
-            //显示提示
-            wx.showToast({
-                title: '已使用',
-                icon: 'success',
-                duration: 2000
-            })
-  
-            //触发显示更新
-            item.available = false
-            this.filterItem()
+        await wx.cloud.callFunction({name: 'getOpenId'}).then(res => {
+            console.log(item._openid, res.result)
+            if (item._openid != res.result) {
+                wx.showToast({
+                    title: '不能使用对方物品',
+                    icon: 'error',
+                    duration: 2000
+                })
+            } else {
+                //使用物品
+                wx.cloud.callFunction({name: 'editAvailable', data: {_id: item._id, value: false, list: getApp().globalData.collectionStorageList}}).then(()=>{
+                    //显示提示
+                    wx.showToast({
+                        title: '已使用',
+                        icon: 'success',
+                        duration: 2000
+                    })
+        
+                    //触发显示更新
+                    item.available = false
+                    this.filterItem()
+                })
+            }
         })
     },
   })
